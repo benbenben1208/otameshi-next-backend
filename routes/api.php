@@ -42,11 +42,7 @@ Route::prefix('user')->group(function () {
 
 
 });
-Route::prefix('user')->name('stripe.')->group(function () {
-    Route::get('checkout', [StripeController::class, 'checkout'])->name('checkout');
-    Route::get('/subscription', [StripeController::class, 'subscription'])->name('subscription');
-    Route::post('/subscription/afterpay', [StripeController::class, 'afterpay'])->name('afterpay');
-});
+
 // Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
 //     $request->fulfill();
 
