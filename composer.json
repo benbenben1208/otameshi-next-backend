@@ -16,11 +16,11 @@
         "goldspecdigital/laravel-eloquent-uuid": "^8.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
-        "laravel/cashier": "^13.6",
         "laravel/framework": "^8.0",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
-        "league/flysystem-aws-s3-v3": "~1.0"
+        "league/flysystem-aws-s3-v3": "~1.0",
+        "pusher/pusher-php-server": "^7.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

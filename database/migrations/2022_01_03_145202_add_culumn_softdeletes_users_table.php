@@ -29,7 +29,6 @@ class AddCulumnSoftdeletesUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('deleted_at');
-            $table->dropUnique('users_email_unique');
             $table->unique('email', 'users_email_unique');
         });
     }

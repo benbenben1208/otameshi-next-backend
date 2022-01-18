@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\User\StripeController;
-
+use App\Events\MessageSended;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,9 +17,7 @@ use App\Http\Controllers\Api\User\StripeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 //ユーザーログイン、ログアウト
 Route::post('api/user/login', [UserController::class, 'login']);

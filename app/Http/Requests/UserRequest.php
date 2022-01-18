@@ -25,12 +25,9 @@ class UserRequest extends FormRequest
     {
 
         return [
-            'firstName' => 'required|string|max:191',
-            'lastName' => 'required|string|max:191',
+            'name' => 'required|string|max:191',
             'email' => 'unique:users,email,NULL,id,deleted_at,NULL',
             'password' => 'required|string',
-            'birth' => 'required|date',
-            'gender' => 'integer|digits_between:1,2',
         ];
     }
 }

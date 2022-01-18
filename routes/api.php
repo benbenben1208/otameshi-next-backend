@@ -11,9 +11,11 @@ use App\Http\Controllers\Api\User\ForgotPasswordController;
 use App\Http\Controllers\Api\User\ResetPasswordController;
 use App\Http\Controllers\Api\Staff\SendOfferController;
 use App\Http\Controllers\Api\Staff\UserSearchController;
+use App\Http\Controllers\Api\User\ArticleController;
 use App\Http\Controllers\Api\User\Friku\FrikuJobsController;
 use App\Http\Controllers\Api\User\JobSearchesController;
 use App\Http\Controllers\Api\User\StripeController;
+use App\Http\Controllers\Api\User\TaskController;
 use App\Http\Controllers\Api\User\VerifyEmailController;
 
 /*
@@ -30,9 +32,20 @@ use App\Http\Controllers\Api\User\VerifyEmailController;
 
 //Note: Route::prefix('user')内のグループにはURIにuserが付きます。
 Route::prefix('user')->group(function () {
+    Route::group(['middleware' => ['auth:users']],function(){
+        Route::get('/', [UserController::class, 'getAuthUser']);
+    });
+
     Route::post('/register', [UserController::class, 'register']);
     Route::get('/show/{user}', [UserController::class, 'show'])->name('user.show');
-
+    Route::get('article', [ArticleController::class, 'index']);
+    Route::get('article/{article}', [ArticleController::class, 'show']);
+    Route::get('task', [TaskController::class, 'index']);
+    Route::get('task/{task}', [TaskController::class, 'show']);
+    Route::group(['middleware' => ['verified']],function(){
+        Route::apiResource('article', ArticleController::class)->except(['index', 'show']);
+        Route::apiResource('task', TaskController::class)->except(['index', 'show']);
+    });
 
 
     //パスワードリセット
@@ -43,11 +56,6 @@ Route::prefix('user')->group(function () {
 
 });
 
-// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//     $request->fulfill();
-
-//     return redirect('localhost:3000');
-// })->middleware(['auth', 'signed'])->name('verification.verify');
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
     ->middleware(['signed',  'throttle:6,1'])
     ->name('verification.verify');

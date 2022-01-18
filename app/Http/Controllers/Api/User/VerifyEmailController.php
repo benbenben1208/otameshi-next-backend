@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class VerifyEmailController extends Controller
 {
+
     public function __invoke(Request $request): RedirectResponse
     {
         $user = User::find($request->route('id'));

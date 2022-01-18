@@ -35,10 +35,10 @@ class UserController extends Controller
 
 
             $request->session()->regenerate();
-            $user = User::findOrFail(Auth::guard('users')->id());
+            // $user = User::findOrFail(Auth::guard('users')->id());
             // $withUser = $user->with('frikuApplicant.frikuApplicantSchedules')->first();
             return response()->json([
-                'user' =>  $user,
+                'user' =>  Auth::guard('users')->user(),
                 'message' => "ログインに成功しました"
             ]);
 
@@ -52,7 +52,7 @@ class UserController extends Controller
     public function logout(Request $request)
     {
 
-        Auth::logout();
+        Auth::guard('users')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
@@ -63,28 +63,18 @@ class UserController extends Controller
 
         $user = User::create([
             'name' => $request->lastName . ' ' . $request->firstName,
-            'first_name' => $request->firstName,
-            'last_name' => $request->lastName,
-            'birth' => $request->birth,
-            'building' => $request->building,
-            'first_name_kana' => $request->firstNameKana,
-            'last_name_kana' => $request->lastNameKana,
-            'gender' => $request->gender,
             'email' => $request->email,
-            'phone_number' => $request->phoneNumber,
-            'postal_code' => $request->postalCode,
-            'pref' => $request->pref,
-            'city' => $request->city,
             'password' => Hash::make($request->password),
         ]);
-        // Auth::guard('users')->login($user);
         event(new Registered($user));
-        return response()->json([$user->id,$user->email]);
+        return response()->json([$user]);
 
     }
     public function getAuthUser(Request $request, UserService $userService)
     {
-        $user = User::findOrFail(Auth::guard('users')->id());
+        $userId = Auth::guard('users')->id();
+        $user = User::with('articles')->findOrFail($userId);
+
 
         return $user;
     }

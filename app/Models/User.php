@@ -15,7 +15,7 @@ use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, Billable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $dates = ['deleted_at'];
     /**
@@ -62,6 +62,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new PasswordResetNotification($token));
+    }
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
     }
 
 

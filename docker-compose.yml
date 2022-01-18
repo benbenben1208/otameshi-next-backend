@@ -19,9 +19,6 @@ services:
     build:
       context: .
       dockerfile: ./.docker/api/Dockerfile
-    environment:
-      SESSION_DOMAIN: "localhost"
-      SANCTUM_STATEFUL_DOMAINS: "localhost"
     volumes:
       - .:/api
     expose:

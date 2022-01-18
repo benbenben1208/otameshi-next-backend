@@ -10,7 +10,6 @@ class Admin extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $connection = 'fukuriku';
 
     protected $fillable = [
         'name',
