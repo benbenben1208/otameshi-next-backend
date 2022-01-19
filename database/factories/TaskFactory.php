@@ -17,7 +17,7 @@ class TaskFactory extends Factory
         return [
             'user_id' => User::factory(),
             'task_name' => $this->faker->sentence(rand(1,4)),
-            'is_done' => $this->faker->boolean(0),
+            'is_done' => $this->faker->boolean(50),
             'created_at' => now(),
             'updated_at' => now()
         ];

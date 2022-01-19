@@ -16,8 +16,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-         $tasks = Task::all()->sortByDesc('created_at');
-
+        $tasks = Task::with('user')->orderBy('id', 'desc')->get();
         return TaskResource::collection($tasks);
     }
 
@@ -50,9 +49,12 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        $task->task_name = $request->taskName;
+        $task->is_done = $request->isDone;
+        $task->save();
+
     }
 
     /**
@@ -61,8 +63,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return response()->Json( $task,  200);
     }
 }

@@ -73,7 +73,7 @@ class UserController extends Controller
     public function getAuthUser(Request $request, UserService $userService)
     {
         $userId = Auth::guard('users')->id();
-        $user = User::with('articles')->findOrFail($userId);
+        $user = User::with('articles', 'tasks')->findOrFail($userId);
 
 
         return $user;
