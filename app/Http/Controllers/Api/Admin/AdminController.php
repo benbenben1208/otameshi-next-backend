@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
+    public function getAdminUser()
+    {
+
+        return Auth::guard('admins')->user();
+    }
     public function login(Request $request)
     {
 

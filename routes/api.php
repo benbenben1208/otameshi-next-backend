@@ -66,9 +66,9 @@ Route::post('/email/verify/resend', function (Request $request) {
 })->middleware(['auth:api', 'throttle:6,1'])->name('verification.send');
 
 
-Route::prefix('admins')->group(function () {
+Route::prefix('admin')->group(function () {
     Route::post('/user/export', [AdminUserController::class, 'csvExport'])->name('user.export');
     Route::middleware(['auth:admins'])->group(function(){
-
+        Route::get('/', [AdminController::class, 'getAdminUser']);
     });
 });
